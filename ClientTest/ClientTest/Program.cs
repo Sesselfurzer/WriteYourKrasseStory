@@ -23,7 +23,7 @@ namespace ClientTest
             IPHostEntry host = null;
             try
             {
-                host = Dns.GetHostEntry(IPAddress.Parse("0.0.0.0"));
+                host = Dns.GetHostEntry(IPAddress.Parse("8.8.8.8"));
             }
 
             catch (System.ArgumentException)
@@ -35,7 +35,7 @@ namespace ClientTest
             IP = host.AddressList[0];
             ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             buffer = new byte[1024];
-            Connect(IP);
+            Connect();
             Console.ReadKey();
         }
 
@@ -58,29 +58,16 @@ namespace ClientTest
 
         private static void OnConnectCallback(IAsyncResult ar)
         {
-            Socket socket = (Socket)ar.AsyncState;
-            try
-            {
-                socket.EndConnect(ar);
-            }
-            catch (Exception ex)
-            {
-
-            }
+            Socket socket = ar.AsyncState as Socket;
+            socket.EndConnect(ar);
         }
 
         private static void OnReceiveCallback(IAsyncResult ar)
         {
-
-            Socket socket = (Socket)ar.AsyncState;
+            Socket socket = ar.AsyncState as Socket;
             int received = socket.EndReceive(ar);
-            byte[] data = new byte[received];
-            Array.Copy(buffer, data, received);
-            string text = Encoding.ASCII.GetString(data);
-
+            string text = Encoding.ASCII.GetString(buffer);
             ClientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), ClientSocket);
-
-
         }
     }
 }
