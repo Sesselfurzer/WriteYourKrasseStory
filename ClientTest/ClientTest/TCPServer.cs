@@ -8,8 +8,13 @@ using System.Threading.Tasks;
 
 namespace ClientTest
 {
+    public delegate void newClientConnectedHandler(ConnectionToClient client);
+    public delegate void messageReceivedHandler(string message);
     class TCPServer
     {
+        const int port = 8888;
+        public event newClientConnectedHandler newClientConnected;
+        public event messageReceivedHandler messageReceived;
         #region Felder
         Socket ServerSocket;
         byte[] buffer = new byte[1024];
@@ -17,43 +22,39 @@ namespace ClientTest
         public delegate void AddClientToListDelegate(string client);
         public delegate void DeleteClientFromListDelegate(string client);
         #endregion
-        private void StartServer()
+        public void StartServer()
         {
-            this.ServerSocket.Bind(new IPEndPoint(IPAddress.Any, 25588));
+            this.ServerSocket = new Socket(SocketType.Stream,ProtocolType.Tcp);
+            this.ServerSocket.Bind(new IPEndPoint(IPAddress.Any, port));
             this.ServerSocket.Listen(1);
             this.ServerSocket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
         }
-        public TCPServer() { 
-
+        public TCPServer()
+        {
+            lstSocket = new List<ConnectionToClient>();
         }
         private void OnAcceptCallback(IAsyncResult ar)
         {
             Socket socket = null;
-            try
+            socket = this.ServerSocket.EndAccept(ar);
+            lstSocket.Add(new ConnectionToClient(socket));
+            if (newClientConnected != null)
             {
-                socket = this.ServerSocket.EndAccept(ar);
-                lstSocket.Add(new ConnectionToClient(socket));
-                listBox1.BeginInvoke(new AddClientToListDelegate(AddClientToListMethod), socket.RemoteEndPoint.ToString());
-                //listBox1.Items.Add(socket.RemoteEndPoint);
-                //MessageBox.Show(socket.RemoteEndPoint.ToString());
-                socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
-                this.ServerSocket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
-            }
-            catch (Exception ex)
-            {
-
-            }
+                newClientConnected(lstSocket.Last());
+            }    
+            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
+            this.ServerSocket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
         }
 
         private void OnReceiveCallback(IAsyncResult ar)
         {
             Socket socket = (Socket)ar.AsyncState;
-            if (socket.Connected == true)
+            // if (socket.Connected == true)
             {
-                int received;
+                int receivedByteCount;
                 try
                 {
-                    received = socket.EndReceive(ar);
+                    receivedByteCount = socket.EndReceive(ar);
                 }
                 catch (Exception ex)
                 {
@@ -61,43 +62,50 @@ namespace ClientTest
                     //und kommt dann in den Catch verweis
                     for (int i = 0; i < lstSocket.Count; i++)
                     {
-                        if (lstSocket[i]._Socket.RemoteEndPoint.ToString().Equals(socket.RemoteEndPoint.ToString()))
+                        if (lstSocket[i].socket.RemoteEndPoint.ToString().Equals(socket.RemoteEndPoint.ToString()))
                         {
                             lstSocket.RemoveAt(i);
-                            listBox1.BeginInvoke(new DeleteClientFromListDelegate(DeleteClientFromListMethod), socket.RemoteEndPoint.ToString());
+                            //listBox1.BeginInvoke(new DeleteClientFromListDelegate(DeleteClientFromListMethod), socket.RemoteEndPoint.ToString());
                         }
                     }
                     return;
                 }
-                if (received != 0)
+
+                if (receivedByteCount != 0)
                 {
-                    byte[] data = new byte[received];
-                    Array.Copy(this.buffer, data, received);
+                    byte[] data = new byte[receivedByteCount];
+                    Array.Copy(this.buffer, data, receivedByteCount);
                     string text = Encoding.ASCII.GetString(data);
-                }
-                else
-                {
-                    for (int i = 0; i < lstSocket.Count; i++)
+                    if (messageReceived != null)
                     {
-                        if (lstSocket[i]._Socket.RemoteEndPoint.ToString().Equals(socket.RemoteEndPoint.ToString()))
-                        {
-                            lstSocket.RemoveAt(i);
-                            listBox1.BeginInvoke(new DeleteClientFromListDelegate(DeleteClientFromListMethod), socket.RemoteEndPoint.ToString());
-                        }
+                        messageReceived(text);
+                        
                     }
                 }
             }
-            else
-            {
-
-            }
-            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
         }
+            //    else
+            //    {
+            //        for (int i = 0; i < lstSocket.Count; i++)
+            //        {
+            //            if (lstSocket[i]._Socket.RemoteEndPoint.ToString().Equals(socket.RemoteEndPoint.ToString()))
+            //            {
+            //                lstSocket.RemoveAt(i);
+            //            }
+            //        }
+            //    }
+            //}
+            ////else
+            //{
 
-        private void SendData(Socket socket, string text)
+            //}
+            //socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
+       // }
+
+        public void SendData(ConnectionToClient client, string text)
         {
             byte[] data = Encoding.ASCII.GetBytes(text);
-            socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(OnSendCallback), socket);
+            client.socket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(OnSendCallback), client.socket);
             //socket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
         }
 

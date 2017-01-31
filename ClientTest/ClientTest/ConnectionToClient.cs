@@ -5,16 +5,16 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ServerTest
+namespace ClientTest
 {
     public class ConnectionToClient
     {
        
-        public Socket _Socket { get; set; }
+        public Socket socket { get; set; }
 
         public ConnectionToClient(Socket socket)
         {
-            this._Socket = socket;
+            this.socket = socket;
         }
     }
 }
