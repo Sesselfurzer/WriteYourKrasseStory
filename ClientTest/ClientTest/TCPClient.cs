@@ -17,12 +17,12 @@ namespace ClientTest
         private byte[] buffer;
         private IPAddress IP = null;
 
-        public TCPClient(string ipAddress)
+        public TCPClient(string hostname)
         {
             IPHostEntry host = null;
             try
             {
-                host = Dns.GetHostEntry(IPAddress.Parse(ipAddress));
+                host = Dns.GetHostEntry(hostname);
             }
 
             catch (System.ArgumentException)
@@ -30,9 +30,9 @@ namespace ClientTest
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
 #warning das ist noch kacke der fehler muss behandelt werden
             }
-
-            IP = host.AddressList[0];
-            ClientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            //IP = IPAddress.IPv6Loopback;
+            IP = host.AddressList[6];
+            ClientSocket = new Socket(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             buffer = new byte[1024];
          //   Connect();
    //         Console.ReadKey();
@@ -48,7 +48,7 @@ namespace ClientTest
             while (ClientSocket.Connected == false || attempts >= maximumAttempts)
             {
                 attempts++;
-              //  tryToConnect();
+            
                 Task t = tryToConnect();
                 t.Wait(connectTimeOut);
             }
@@ -56,7 +56,15 @@ namespace ClientTest
         }
         private async Task tryToConnect()
         {
-            ClientSocket.Connect(IP, 8888);
+            try
+            {
+                // ClientSocket.BeginConnect(IP, OnReceiveCallback, ClientSocket);
+                ClientSocket.Connect(IP, 8888);
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
         private void OnReceiveCallback(IAsyncResult ar)
         {

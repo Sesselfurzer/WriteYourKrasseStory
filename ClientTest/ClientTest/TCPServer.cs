@@ -16,7 +16,7 @@ namespace ClientTest
         public event newClientConnectedHandler newClientConnected;
         public event messageReceivedHandler messageReceived;
         #region Felder
-        Socket ServerSocket;
+        Socket ServerSocketv6,ServerSocketv4;
         byte[] buffer = new byte[1024];
         List<ConnectionToClient> lstSocket;
         public delegate void AddClientToListDelegate(string client);
@@ -24,26 +24,43 @@ namespace ClientTest
         #endregion
         public void StartServer()
         {
-            this.ServerSocket = new Socket(SocketType.Stream,ProtocolType.Tcp);
-            this.ServerSocket.Bind(new IPEndPoint(IPAddress.Any, port));
-            this.ServerSocket.Listen(1);
-            this.ServerSocket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
+            this.ServerSocketv6 = new Socket(SocketType.Stream,ProtocolType.Tcp);
+            this.ServerSocketv6.Bind(new IPEndPoint(IPAddress.IPv6Any, port));
+            this.ServerSocketv6.Listen(1);
+            this.ServerSocketv6.BeginAccept(new AsyncCallback(OnAcceptCallbackv6), null);
+#warning nicht überprüfte ipv4 unterstützung
+            this.ServerSocketv4 = new Socket(SocketType.Stream, ProtocolType.Tcp);
+            this.ServerSocketv4.Bind(new IPEndPoint(IPAddress.Any, port));
+            this.ServerSocketv4.Listen(1);
+            this.ServerSocketv4.BeginAccept(new AsyncCallback(OnAcceptCallbackv4), null);
         }
         public TCPServer()
         {
             lstSocket = new List<ConnectionToClient>();
         }
-        private void OnAcceptCallback(IAsyncResult ar)
+        private void OnAcceptCallbackv6(IAsyncResult ar)
         {
             Socket socket = null;
-            socket = this.ServerSocket.EndAccept(ar);
+            socket = this.ServerSocketv6.EndAccept(ar);
             lstSocket.Add(new ConnectionToClient(socket));
             if (newClientConnected != null)
             {
                 newClientConnected(lstSocket.Last());
             }    
             socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
-            this.ServerSocket.BeginAccept(new AsyncCallback(OnAcceptCallback), null);
+            this.ServerSocketv6.BeginAccept(new AsyncCallback(OnAcceptCallbackv6), null);
+        }
+        private void OnAcceptCallbackv4(IAsyncResult ar)
+        {
+            Socket socket = null;
+            socket = this.ServerSocketv4.EndAccept(ar);
+            lstSocket.Add(new ConnectionToClient(socket));
+            if (newClientConnected != null)
+            {
+                newClientConnected(lstSocket.Last());
+            }
+            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
+            this.ServerSocketv4.BeginAccept(new AsyncCallback(OnAcceptCallbackv4), null);
         }
 
         private void OnReceiveCallback(IAsyncResult ar)
