@@ -7,159 +7,212 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Threading;
 namespace winWriteYourKrasseStory
 {
     public partial class frmStory : Form
     {
-
+        delegate void neuerSpielerDelegate(string spieler);
         List<Spieler> lstSpieler;
         List<string> lstItems;
-        int Spieler = 0;
-        int Voting = 0;
+        Spieler thisSpieler;
         TCPServer Server;
         TCPClient client;
-        public frmStory(int maxlength,object isServer,string strIP,string Name)
+        Thread ServerThread;
+        ListView lv;
+        public frmStory(string Hostname, string Name)
         {
             InitializeComponent();
             lstSpieler = new List<Spieler>();
-            lstItems = new List<String>();
-            if (isServer is TCPServer)
-            {
-                Server = (TCPServer)isServer;
-                Server.newClientConnected += Server_newClientConnected;
-                Server.messageReceived += messageReceived;
-                client = new TCPClient(strIP);
-                client.messageReceived += messageReceived;
-            }
-            else
-            {
-                client = (TCPClient)isServer;
-                client.messageReceived += messageReceived;
-            }
+            lstItems = new List<string>();
             lvSpieler.Items.Add(Name);
-            lstSpieler.Add(new Spieler(Name,client));        
-            tbZeile.MaxLength = maxlength ;
+            lstSpieler.Add(new Spieler(Name));
             tbZeile.Enabled = false;
+            client = new TCPClient(Hostname);
+            client.messageReceived += messageReceived;
+            client.send("P:" + Name);
+            btnEnd.Enabled = false;
+        }
+        public frmStory( string Name, int maxlength)
+        {
+            //basis Konstruktor
+            InitializeComponent();
+            lstSpieler = new List<Spieler>();
+            lstItems = new List<string>();
+            lvSpieler.Items.Add(Name);
+            lstSpieler.Add(new Spieler(Name));
+            tbZeile.Enabled = false;
+            //basis Konstruktor Ende
+            Server = new TCPServer();
+            Server.newClientConnected += Server_newClientConnected;
+            Server.messageReceived += ServermessageReceived;
+            ServerThread = new Thread(() => thread(lvSpieler));
+            ServerThread.Start();
+            tbZeile.MaxLength = maxlength;
+        }
+        private void ServermessageReceived(string message)
+        {
+            switch (message.Substring(0,2))
+            {
+                case "P:":
+                    for(int i = 0; i < lstSpieler.Count; i++)
+                    {
+                        if (lstSpieler[i].Name == message.Substring(2))
+                        {
+                            if (lstSpieler.Count - 1 == i)
+                            {
+                                if (lstSpieler[0].client != null)
+                                {
+                                    Server.SendData(lstSpieler[0].client, "Dr");
+                                }
+                                else
+                                {
+                                    this.tbZeile.Enabled = true;
+                                }
+                            }
+                            else
+                            {
+                                if (lstSpieler[i + 1].client != null)
+                                {
+                                    Server.SendData(lstSpieler[i + 1].client, "Dr");
+                                }
+                                else
+                                {
+                                    this.tbZeile.Enabled = true;
+                                }
+                            }
+                        }
+                    }
+                    break;
+                case "V:":
+                    break;
+                case "Z:":
+                        foreach (Spieler s in lstSpieler)
+                        {
+                            Server.SendData(s.client, message);
+                        }
+                    break;
+
+            }
+        }
+        public void thread(ListView lvSpieler1)
+        {
+            lv = lvSpieler1;
+            Server.StartServer();
         }
         private void Server_newClientConnected(ConnectionToClient client)
         {
             lstSpieler.Add(new Spieler("Player " + lstSpieler.Count + 1, client));
-            foreach(Spieler s in lstSpieler)
+            Server.SendData(client, "Y: " + "Player " + lstSpieler.Count);
+            foreach (Spieler s in lstSpieler)
             {
-                Server.SendData(client, "P: "+s.Name);
-                s.client.send("P: " + s.Name);
+                Server.SendData(client, "P: " + s.Name);
             }
 
         }
-
         private void messageReceived(string str)
         {
             switch (str.Substring(0, 2))
             {
                 case "P:":
-                    NeuerSpieler(str.Substring(2, str.Length-16),str.Substring(str.Length-15,15));
-
+                    NeuerSpieler(str.Substring(2, str.Length - 2));
                     break;
                 case "Z:":
-                    if (Server != null&&lbZeilen.Items[lbZeilen.Items.Count].ToString()!= str.Substring(str.Length - 2, str.Length))
-                    {
-                        foreach(Spieler s in lstSpieler)
-                        {
-                            s.client.send(str);
-                        }
-                    }
-                        if (str.Substring(str.Length - 2, str.Length) == "0")
-                        {
-                            NeueZeile(str.Substring(2, str.Length - 1), false);
-                        }
-                        else
-                        {
-                            NeueZeile(str.Substring(2, str.Length - 1), true);
-                        }
+                        NeueZeile(str.Substring(2, str.Length - 2));
                     break;
-                case "V:":
-                    changeVoting();
+                //case "V:":
+                //    changeVoting();
+                //    break;
+                case "Y:":
+                    thisSpieler = new Spieler(str.Substring(3, str.Length - 2));
+                    break;
+                case "EN":
+                    lbZeilen.Items.Clear();
+                    foreach (string s in lstItems)
+                    {
+                        lbZeilen.Items.Add(s);
+                    }
+                    break;
+                case"Dr":
+                    tbZeile.Enabled = true;
                     break;
             }
         }
-
         public void backgroundclear()
         {
-            foreach(ListViewItem i in lvSpieler.Items)
+            foreach (ListViewItem i in lvSpieler.Items)
             {
                 i.BackColor = lvSpieler.BackColor;
             }
         }
         private void tbZeile_KeyDown(object sender, KeyEventArgs e)
         {
-            if(e.KeyCode == Keys.Enter)
+            if (e.KeyCode == Keys.Enter)
             {
-                if (lbZeilen.Items.Count > 1)
-                {
-                   
-                }
-                lstItems.Add(tbZeile.Text);
-                lbZeilen.Items.Clear();
-                lbZeilen.Items.Add(lstItems[lstItems.Count - 1]);
+                NeueZeile(tbZeile.Text);
                 tbZeile.Text = "";
-                if (Spieler < lvSpieler.Items.Count)
+            }
+
+        }
+        private void btnEnd_Click(object sender, EventArgs e)
+        {
+            lbZeilen.Items.Clear();
+            foreach (string s in lstItems)
+            {
+                lbZeilen.Items.Add(s);
+            }
+            foreach(Spieler s in lstSpieler)
+            {
+                if(s.client != null)
                 {
-                    backgroundclear();
-                    lvSpieler.Items[Spieler].BackColor = Color.Green;
-                    Spieler++;
-                }
-                else
-                {
-                    backgroundclear();
-                    Spieler = 0;
-                    lvSpieler.Items[0].BackColor = lvSpieler.BackColor;
+                    Server.SendData(s.client, "EN");
                 }
             }
 
         }
-
-        private void btnEnd_Click(object sender, EventArgs e)
-        {
-            changeVoting();
-
-        }
-
         private void frmStory_FormClosed(object sender, FormClosedEventArgs e)
         {
             Application.Exit();
         }
-
-        public void NeuerSpieler(string Player,string clientip)
+        public void NeuerSpieler(string Player)
         {
-            lvSpieler.Items.Add(Player);
-            lstSpieler.Add(new Spieler(Player,new TCPClient(clientip)));
-        }
-        public void NeueZeile(string Zeile,bool type)
-        {
-            lstItems.Add(Zeile);
-            if (type)
+            if (InvokeRequired)
             {
-                tbZeile.Enabled = true;
-                lbZeilen.Items.Add(Zeile);
+                neuerSpielerDelegate temp = NeuerSpieler;
+                object[] tempArgs = { Player };
+                Invoke(temp, tempArgs);
             }
             else
             {
-                tbZeile.Enabled = false;
+                lv.Items.Add(Player);
             }
+            lstSpieler.Add(new Spieler(Player));
         }
-        public void changeVoting()
+        public void NeueZeile(string Zeile)
         {
-            Voting++;
-            btnEnd.Text = "Beenden " + Voting;
-            if (Voting >= lstSpieler.Count && Voting != 0)
+            lstItems.Add(Zeile);
+            lbZeilen.Items.Add(Zeile);
+            if (client != null)
             {
-                lbZeilen.Items.Clear();
-                foreach (String s in lstItems)
-                {
-                    lbZeilen.Items.Add(s);
-                }
+                client.send("P:" + thisSpieler.Name);
+            }
+            else
+            {
+                ServermessageReceived("P:" + thisSpieler);
             }
         }
+        //public void changeVoting()
+        //{
+        //    Voting++;
+        //    btnEnd.Text = "Beenden " + Voting;
+        //    if (Voting >= lstSpieler.Count && Voting != 0)
+        //    {
+        //        lbZeilen.Items.Clear();
+        //        foreach (String s in lstItems)
+        //        {
+        //            lbZeilen.Items.Add(s);
+        //        }
+        //    }
+        //}
     }
 }

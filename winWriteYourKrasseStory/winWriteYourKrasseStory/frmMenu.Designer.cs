@@ -30,26 +30,24 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tServer = new System.Windows.Forms.TabPage();
+            this.tbNameServer = new System.Windows.Forms.TextBox();
+            this.labelName = new System.Windows.Forms.Label();
             this.tblength = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.btnStart = new System.Windows.Forms.Button();
-            this.tbPort = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tClient = new System.Windows.Forms.TabPage();
-            this.btnConnect = new System.Windows.Forms.Button();
-            this.label4 = new System.Windows.Forms.Label();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbPort2 = new System.Windows.Forms.TextBox();
-            this.tbServerIP = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelName = new System.Windows.Forms.Label();
-            this.tbName1 = new System.Windows.Forms.TextBox();
-            this.tbName2 = new System.Windows.Forms.TextBox();
+            this.tbNameClient = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.tbServerIP = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tabControl.SuspendLayout();
             this.tServer.SuspendLayout();
             this.tClient.SuspendLayout();
+            this.tableLayoutPanel1.SuspendLayout();
+            this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
@@ -60,195 +58,180 @@
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(333, 221);
+            this.tabControl.Size = new System.Drawing.Size(478, 143);
             this.tabControl.TabIndex = 0;
             // 
             // tServer
             // 
-            this.tServer.Controls.Add(this.tbName1);
-            this.tServer.Controls.Add(this.labelName);
-            this.tServer.Controls.Add(this.tblength);
-            this.tServer.Controls.Add(this.label5);
-            this.tServer.Controls.Add(this.btnStart);
-            this.tServer.Controls.Add(this.tbPort);
-            this.tServer.Controls.Add(this.label3);
+            this.tServer.Controls.Add(this.tableLayoutPanel1);
             this.tServer.Location = new System.Drawing.Point(4, 22);
             this.tServer.Name = "tServer";
             this.tServer.Padding = new System.Windows.Forms.Padding(3);
-            this.tServer.Size = new System.Drawing.Size(325, 195);
+            this.tServer.Size = new System.Drawing.Size(470, 117);
             this.tServer.TabIndex = 0;
             this.tServer.Text = "Server";
             this.tServer.UseVisualStyleBackColor = true;
-            this.tServer.Click += new System.EventHandler(this.tServer_Click);
+            // 
+            // tbNameServer
+            // 
+            this.tbNameServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNameServer.Location = new System.Drawing.Point(83, 3);
+            this.tbNameServer.Name = "tbNameServer";
+            this.tbNameServer.Size = new System.Drawing.Size(378, 20);
+            this.tbNameServer.TabIndex = 6;
+            // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelName.Location = new System.Drawing.Point(3, 0);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(74, 34);
+            this.labelName.TabIndex = 5;
+            this.labelName.Text = "Spielername";
             // 
             // tblength
             // 
-            this.tblength.Location = new System.Drawing.Point(74, 64);
+            this.tblength.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblength.Location = new System.Drawing.Point(83, 37);
             this.tblength.Name = "tblength";
-            this.tblength.Size = new System.Drawing.Size(100, 20);
+            this.tblength.Size = new System.Drawing.Size(378, 20);
             this.tblength.TabIndex = 4;
-            this.tblength.TextChanged += new System.EventHandler(this.textBox4_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(9, 64);
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 34);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(63, 13);
+            this.label5.Size = new System.Drawing.Size(74, 34);
             this.label5.TabIndex = 3;
             this.label5.Text = "Max Lenght";
-            this.label5.Click += new System.EventHandler(this.label5_Click);
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(6, 106);
+            this.tableLayoutPanel1.SetColumnSpan(this.btnStart, 2);
+            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStart.Location = new System.Drawing.Point(3, 71);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(139, 23);
+            this.btnStart.Size = new System.Drawing.Size(458, 37);
             this.btnStart.TabIndex = 2;
             this.btnStart.Text = "Server Starten";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
             // 
-            // tbPort
-            // 
-            this.tbPort.Location = new System.Drawing.Point(74, 41);
-            this.tbPort.Name = "tbPort";
-            this.tbPort.Size = new System.Drawing.Size(100, 20);
-            this.tbPort.TabIndex = 1;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 41);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(26, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Port";
-            // 
             // tClient
             // 
-            this.tClient.Controls.Add(this.tbName2);
-            this.tClient.Controls.Add(this.label6);
-            this.tClient.Controls.Add(this.btnConnect);
-            this.tClient.Controls.Add(this.label4);
-            this.tClient.Controls.Add(this.btnSearch);
-            this.tClient.Controls.Add(this.label2);
-            this.tClient.Controls.Add(this.tbPort2);
-            this.tClient.Controls.Add(this.tbServerIP);
-            this.tClient.Controls.Add(this.label1);
+            this.tClient.Controls.Add(this.tableLayoutPanel2);
             this.tClient.Location = new System.Drawing.Point(4, 22);
             this.tClient.Name = "tClient";
             this.tClient.Padding = new System.Windows.Forms.Padding(3);
-            this.tClient.Size = new System.Drawing.Size(325, 195);
+            this.tClient.Size = new System.Drawing.Size(470, 117);
             this.tClient.TabIndex = 1;
             this.tClient.Text = "Client";
             this.tClient.UseVisualStyleBackColor = true;
             // 
-            // btnConnect
+            // tbNameClient
             // 
-            this.btnConnect.Location = new System.Drawing.Point(172, 108);
-            this.btnConnect.Name = "btnConnect";
-            this.btnConnect.Size = new System.Drawing.Size(123, 23);
-            this.btnConnect.TabIndex = 6;
-            this.btnConnect.Text = "Verbinden";
-            this.btnConnect.UseVisualStyleBackColor = true;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(187, 63);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(37, 13);
-            this.label4.TabIndex = 5;
-            this.label4.Text = "Status";
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Location = new System.Drawing.Point(12, 109);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(154, 23);
-            this.btnSearch.TabIndex = 4;
-            this.btnSearch.Text = "Server Suchen";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(8, 83);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(26, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Port";
-            // 
-            // tbPort2
-            // 
-            this.tbPort2.Location = new System.Drawing.Point(65, 83);
-            this.tbPort2.Name = "tbPort2";
-            this.tbPort2.Size = new System.Drawing.Size(100, 20);
-            this.tbPort2.TabIndex = 2;
-            // 
-            // tbServerIP
-            // 
-            this.tbServerIP.Location = new System.Drawing.Point(65, 56);
-            this.tbServerIP.Name = "tbServerIP";
-            this.tbServerIP.Size = new System.Drawing.Size(100, 20);
-            this.tbServerIP.TabIndex = 1;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(8, 63);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Server IP";
-            // 
-            // labelName
-            // 
-            this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(9, 9);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(65, 13);
-            this.labelName.TabIndex = 5;
-            this.labelName.Text = "Spielername";
-            // 
-            // tbName1
-            // 
-            this.tbName1.Location = new System.Drawing.Point(74, 9);
-            this.tbName1.Name = "tbName1";
-            this.tbName1.Size = new System.Drawing.Size(100, 20);
-            this.tbName1.TabIndex = 6;
-            // 
-            // tbName2
-            // 
-            this.tbName2.Location = new System.Drawing.Point(66, 19);
-            this.tbName2.Name = "tbName2";
-            this.tbName2.Size = new System.Drawing.Size(100, 20);
-            this.tbName2.TabIndex = 8;
+            this.tbNameClient.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNameClient.Location = new System.Drawing.Point(83, 3);
+            this.tbNameClient.Name = "tbNameClient";
+            this.tbNameClient.Size = new System.Drawing.Size(378, 20);
+            this.tbNameClient.TabIndex = 8;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(1, 19);
+            this.label6.Location = new System.Drawing.Point(3, 0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 13);
             this.label6.TabIndex = 7;
             this.label6.Text = "Spielername";
             // 
+            // btnSearch
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.btnSearch, 2);
+            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSearch.Location = new System.Drawing.Point(3, 61);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(458, 47);
+            this.btnSearch.TabIndex = 4;
+            this.btnSearch.Text = "Server Suchen";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnClientStart_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Server IP";
+            // 
+            // tbServerIP
+            // 
+            this.tbServerIP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbServerIP.Location = new System.Drawing.Point(83, 32);
+            this.tbServerIP.Name = "tbServerIP";
+            this.tbServerIP.Size = new System.Drawing.Size(378, 20);
+            this.tbServerIP.TabIndex = 1;
+            // 
+            // tableLayoutPanel1
+            // 
+            this.tableLayoutPanel1.ColumnCount = 2;
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel1.Controls.Add(this.labelName, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.tblength, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.tbNameServer, 1, 0);
+            this.tableLayoutPanel1.Controls.Add(this.label5, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this.btnStart, 0, 2);
+            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
+            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 111);
+            this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // tableLayoutPanel2
+            // 
+            this.tableLayoutPanel2.ColumnCount = 2;
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 80F));
+            this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.tableLayoutPanel2.Controls.Add(this.label6, 0, 0);
+            this.tableLayoutPanel2.Controls.Add(this.btnSearch, 0, 2);
+            this.tableLayoutPanel2.Controls.Add(this.tbNameClient, 1, 0);
+            this.tableLayoutPanel2.Controls.Add(this.tbServerIP, 1, 1);
+            this.tableLayoutPanel2.Controls.Add(this.label1, 0, 1);
+            this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(3, 3);
+            this.tableLayoutPanel2.Name = "tableLayoutPanel2";
+            this.tableLayoutPanel2.RowCount = 3;
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 53F));
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(464, 111);
+            this.tableLayoutPanel2.TabIndex = 9;
+            // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(333, 221);
+            this.ClientSize = new System.Drawing.Size(478, 143);
             this.Controls.Add(this.tabControl);
             this.Name = "frmMenu";
             this.Text = "frmMenu";
             this.tabControl.ResumeLayout(false);
             this.tServer.ResumeLayout(false);
-            this.tServer.PerformLayout();
             this.tClient.ResumeLayout(false);
-            this.tClient.PerformLayout();
+            this.tableLayoutPanel1.ResumeLayout(false);
+            this.tableLayoutPanel1.PerformLayout();
+            this.tableLayoutPanel2.ResumeLayout(false);
+            this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -258,21 +241,17 @@
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tServer;
         private System.Windows.Forms.TabPage tClient;
-        private System.Windows.Forms.TextBox tbPort;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbPort2;
-        private System.Windows.Forms.TextBox tbServerIP;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnStart;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btnSearch;
-        private System.Windows.Forms.Button btnConnect;
         private System.Windows.Forms.TextBox tblength;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.TextBox tbName1;
+        private System.Windows.Forms.TextBox tbNameServer;
         private System.Windows.Forms.Label labelName;
-        private System.Windows.Forms.TextBox tbName2;
+        private System.Windows.Forms.TextBox tbNameClient;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.TextBox tbServerIP;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
     }
 }

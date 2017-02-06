@@ -24,7 +24,6 @@ namespace winWriteYourKrasseStory
             {
                 host = Dns.GetHostEntry(hostname);
             }
-
             catch (System.ArgumentException)
             {
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
@@ -48,7 +47,6 @@ namespace winWriteYourKrasseStory
             while (ClientSocket.Connected == false && attempts <= maximumAttempts)
             {
                 attempts++;
-            
                 Task t = tryToConnect();
                 t.Wait(connectTimeOut);
             }

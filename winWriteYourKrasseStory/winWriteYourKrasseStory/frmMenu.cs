@@ -15,40 +15,18 @@ namespace winWriteYourKrasseStory
         public frmMenu()
         {
             InitializeComponent();
-            btnConnect.Enabled = false;
         }
-
         private void btnStarten_Click(object sender, EventArgs e)
         {
-            TCPServer Server = new TCPServer();
-            Form form1 = new frmStory(100,Server,tbServerIP.Text,tbName1.Text);
+            Form form1 = new frmStory(tbNameServer.Text, Convert.ToInt32(tblength.Text));
             form1.Show();
             this.Hide();
         }
-
-        private void button2_Click(object sender, EventArgs e)
+        private void btnClientStart_Click(object sender, EventArgs e)
         {
-            TCPClient client = new TCPClient(tbServerIP.Text);
-            client.Connect();
-            Form form1 = new frmStory(100, client, tbServerIP.Text, tbName1.Text);
+            Form form1 = new frmStory(tbServerIP.Text, tbNameClient.Text );
             form1.Show();
             this.Hide();
-
-        }
-
-        private void tServer_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }
