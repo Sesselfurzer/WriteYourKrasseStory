@@ -46,8 +46,10 @@ namespace winWriteYourKrasseStory
             Server = new TCPServer();
             Server.newClientConnected += Server_newClientConnected;
             Server.messageReceived += ServermessageReceived;
+#warning nutzloser thread
             ServerThread = new Thread(() => thread(lvSpieler));
-            ServerThread.Start();
+             ServerThread.Start();
+            //thread(lvSpieler);
             tbZeile.MaxLength = maxlength;
         }
         private void ServermessageReceived(string message)

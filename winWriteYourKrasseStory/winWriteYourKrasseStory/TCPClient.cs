@@ -29,19 +29,18 @@ namespace winWriteYourKrasseStory
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
 #warning das ist noch kacke der fehler muss behandelt werden
             }
-          
+
             IP = host.AddressList[0];
             ClientSocket = new Socket(IP.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             buffer = new byte[1024];
-         //   Connect();
-   //         Console.ReadKey();
+            //   Connect();
+            //         Console.ReadKey();
         }
 
         public void send(string message)
         {
-            byte[] data = Encoding.UTF8.GetBytes(message);
-            ClientSocket.BeginSend(data,0,data.Length,
-            ClientSocket.Send(Encoding.UTF8.GetBytes(message));
+            byte[] data = Encoding.ASCII.GetBytes(message);
+            ClientSocket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(OnSendCallback), ClientSocket);
         }
         public async void Connect()
         {
@@ -76,6 +75,11 @@ namespace winWriteYourKrasseStory
                 messageReceived(text);
             }
             ClientSocket.BeginReceive(buffer, 0, buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), ClientSocket);
+        }
+        private void OnSendCallback(IAsyncResult ar)
+        {
+            Socket socket = (Socket)ar.AsyncState;
+            socket.EndSend(ar);
         }
     }
 }
