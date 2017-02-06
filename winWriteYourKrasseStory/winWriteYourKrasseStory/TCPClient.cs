@@ -39,6 +39,8 @@ namespace winWriteYourKrasseStory
 
         public void send(string message)
         {
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            ClientSocket.BeginSend(data,0,data.Length,
             ClientSocket.Send(Encoding.UTF8.GetBytes(message));
         }
         public async void Connect()

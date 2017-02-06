@@ -95,8 +95,7 @@ namespace winWriteYourKrasseStory
                     string text = Encoding.ASCII.GetString(data);
                     if (messageReceived != null)
                     {
-                        messageReceived(text);
-                        
+                        messageReceived(text);                        
                     }
                 }
             }
