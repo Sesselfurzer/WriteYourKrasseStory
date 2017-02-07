@@ -12,8 +12,9 @@ namespace winWriteYourKrasseStory
 {
     public partial class frmStory : Form
     {
-        delegate void neuerSpielerDelegate(string spieler);
+        delegate void voidStringDelegate(string spieler);
         delegate void SpieleraddDelegate(string s);
+        delegate void voidVoidDelegate();
         List<Spieler> lstSpieler;
         List<string> lstItems;
         Spieler thisSpieler;
@@ -102,25 +103,17 @@ namespace winWriteYourKrasseStory
             switch (str.Substring(0, 2))
             {
                 case "P:":
-
-                    lvSpieler.Items.Clear();
-
-                    string[] strsplit2 = str.Split(':');
-                    string[] strsplit = strsplit2.Skip(1).ToArray();
-                    foreach (string s in strsplit)
-                    {
-                        NeuerSpieler(s.Substring(0, s.Length - 1));
-                    }
+                    string spielerName = str.Substring(2);
+                    NeuerSpieler(spielerName);
                     break;
                 case "Z:":
-                    NeueZeile(str.Substring(2, str.Length - 2));
+                    zeileZuListeHinzufuegen(str.Substring(2, str.Length - 2));
                     break;
                 case "EN":
-                    lbZeilen.Items.Clear();
-                    foreach (string s in lstItems) { lbZeilen.Items.Add(s); }
+                    aufloesen();
                     break;
                 case "Dr":
-                    tbZeile.Enabled = true;
+                    rundeVorbereiten();
                     break;
             }
         }
@@ -135,7 +128,7 @@ namespace winWriteYourKrasseStory
         {
             if (e.KeyCode == Keys.Enter)
             {
-                NeueZeile(tbZeile.Text);
+                zeileSenden(tbZeile.Text);
                 tbZeile.Text = "";
                 tbZeile.Enabled = false;
             }
@@ -173,14 +166,60 @@ namespace winWriteYourKrasseStory
         }
         public void NeuerSpieler(string Player)
         {
-            lvSpieler.Items.Add(Player);
+            if (InvokeRequired)
+            {
+                voidStringDelegate temp = NeuerSpieler;
+                Object[] args = { Player };
+                Invoke(temp,args);
+            }
+            else
+            {
+                lvSpieler.Items.Add(Player);
+            }
         }
-        public void NeueZeile(string Zeile)
+        public void zeileSenden(string Zeile)
         {
-            lstItems.Add(Zeile);
-            lbZeilen.Items.Add(Zeile);
             client.send("P:" + thisSpieler.Name);
             client.send("Z:" + Zeile);
+        }
+        public void zeileZuListeHinzufuegen(string Zeile)
+        {
+            if (InvokeRequired)
+            {
+                voidStringDelegate temp = zeileZuListeHinzufuegen;
+                Object[] tempargs = { Zeile };
+                Invoke(temp, tempargs);
+            }
+            else
+            {
+                lstItems.Add(Zeile);
+                lbZeilen.Items.Add(Zeile);
+            }
+        }
+        public void rundeVorbereiten()
+        {
+            if (InvokeRequired)
+            {
+                voidVoidDelegate temp = rundeVorbereiten;
+                Invoke(temp);
+            }
+            else
+            {
+                tbZeile.Enabled = true;
+            }
+        }
+        private void aufloesen()
+        {
+            if (InvokeRequired)
+            {
+                voidVoidDelegate temp = aufloesen;
+                Invoke(temp);
+            }
+            else
+            {
+                lbZeilen.Items.Clear();
+                foreach (string s in lstItems) { lbZeilen.Items.Add(s); }
+            }
         }
     }
 }

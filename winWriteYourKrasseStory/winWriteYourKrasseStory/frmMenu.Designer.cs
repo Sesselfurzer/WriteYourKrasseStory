@@ -31,15 +31,15 @@
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tServer = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnStart = new System.Windows.Forms.Button();
             this.labelName = new System.Windows.Forms.Label();
             this.tblength = new System.Windows.Forms.TextBox();
             this.tbNameServer = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
+            this.btnStart = new System.Windows.Forms.Button();
             this.tClient = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
-            this.btnSearch = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
+            this.btnSearch = new System.Windows.Forms.Button();
             this.tbNameClient = new System.Windows.Forms.TextBox();
             this.tbServerIP = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -92,18 +92,6 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 111);
             this.tableLayoutPanel1.TabIndex = 7;
             // 
-            // btnStart
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.btnStart, 2);
-            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(3, 71);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(458, 37);
-            this.btnStart.TabIndex = 2;
-            this.btnStart.Text = "Server Starten";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
-            // 
             // labelName
             // 
             this.labelName.AutoSize = true;
@@ -140,6 +128,18 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Max Lenght";
             // 
+            // btnStart
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.btnStart, 2);
+            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStart.Location = new System.Drawing.Point(3, 71);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(458, 37);
+            this.btnStart.TabIndex = 2;
+            this.btnStart.Text = "Server Starten";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
+            // 
             // tClient
             // 
             this.tClient.Controls.Add(this.tableLayoutPanel2);
@@ -171,6 +171,15 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(464, 111);
             this.tableLayoutPanel2.TabIndex = 9;
             // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Spielername";
+            // 
             // btnSearch
             // 
             this.tableLayoutPanel2.SetColumnSpan(this.btnSearch, 2);
@@ -182,15 +191,6 @@
             this.btnSearch.Text = "Server Suchen";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnClientStart_Click);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Spielername";
             // 
             // tbNameClient
             // 

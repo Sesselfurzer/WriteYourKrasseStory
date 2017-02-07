@@ -68,8 +68,10 @@ namespace winWriteYourKrasseStory
         private void OnReceiveCallback(IAsyncResult ar)
         {
             Socket socket = ar.AsyncState as Socket;
-            int received = socket.EndReceive(ar);
-            string text = Encoding.ASCII.GetString(buffer);
+            int receivedByteCount = socket.EndReceive(ar);
+            byte[] data = new byte[receivedByteCount];
+            Array.Copy(this.buffer, data, receivedByteCount);
+            string text = Encoding.ASCII.GetString(data);
             if (messageReceived != null)
             {
                 messageReceived(text);
