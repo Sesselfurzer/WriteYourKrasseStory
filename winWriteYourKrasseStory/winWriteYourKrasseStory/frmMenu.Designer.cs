@@ -30,23 +30,23 @@
         {
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tServer = new System.Windows.Forms.TabPage();
-            this.tbNameServer = new System.Windows.Forms.TextBox();
+            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnStart = new System.Windows.Forms.Button();
             this.labelName = new System.Windows.Forms.Label();
             this.tblength = new System.Windows.Forms.TextBox();
+            this.tbNameServer = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnStart = new System.Windows.Forms.Button();
             this.tClient = new System.Windows.Forms.TabPage();
-            this.tbNameClient = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.btnSearch = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.tbServerIP = new System.Windows.Forms.TextBox();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.label6 = new System.Windows.Forms.Label();
+            this.tbNameClient = new System.Windows.Forms.TextBox();
+            this.tbServerIP = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.tabControl.SuspendLayout();
             this.tServer.SuspendLayout();
-            this.tClient.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
+            this.tClient.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -72,111 +72,6 @@
             this.tServer.Text = "Server";
             this.tServer.UseVisualStyleBackColor = true;
             // 
-            // tbNameServer
-            // 
-            this.tbNameServer.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNameServer.Location = new System.Drawing.Point(83, 3);
-            this.tbNameServer.Name = "tbNameServer";
-            this.tbNameServer.Size = new System.Drawing.Size(378, 20);
-            this.tbNameServer.TabIndex = 6;
-            // 
-            // labelName
-            // 
-            this.labelName.AutoSize = true;
-            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.labelName.Location = new System.Drawing.Point(3, 0);
-            this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(74, 34);
-            this.labelName.TabIndex = 5;
-            this.labelName.Text = "Spielername";
-            // 
-            // tblength
-            // 
-            this.tblength.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tblength.Location = new System.Drawing.Point(83, 37);
-            this.tblength.Name = "tblength";
-            this.tblength.Size = new System.Drawing.Size(378, 20);
-            this.tblength.TabIndex = 4;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.label5.Location = new System.Drawing.Point(3, 34);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(74, 34);
-            this.label5.TabIndex = 3;
-            this.label5.Text = "Max Lenght";
-            // 
-            // btnStart
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this.btnStart, 2);
-            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnStart.Location = new System.Drawing.Point(3, 71);
-            this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(458, 37);
-            this.btnStart.TabIndex = 2;
-            this.btnStart.Text = "Server Starten";
-            this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
-            // 
-            // tClient
-            // 
-            this.tClient.Controls.Add(this.tableLayoutPanel2);
-            this.tClient.Location = new System.Drawing.Point(4, 22);
-            this.tClient.Name = "tClient";
-            this.tClient.Padding = new System.Windows.Forms.Padding(3);
-            this.tClient.Size = new System.Drawing.Size(470, 117);
-            this.tClient.TabIndex = 1;
-            this.tClient.Text = "Client";
-            this.tClient.UseVisualStyleBackColor = true;
-            // 
-            // tbNameClient
-            // 
-            this.tbNameClient.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbNameClient.Location = new System.Drawing.Point(83, 3);
-            this.tbNameClient.Name = "tbNameClient";
-            this.tbNameClient.Size = new System.Drawing.Size(378, 20);
-            this.tbNameClient.TabIndex = 8;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Spielername";
-            // 
-            // btnSearch
-            // 
-            this.tableLayoutPanel2.SetColumnSpan(this.btnSearch, 2);
-            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnSearch.Location = new System.Drawing.Point(3, 61);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(458, 47);
-            this.btnSearch.TabIndex = 4;
-            this.btnSearch.Text = "Server Suchen";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.btnClientStart_Click);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(3, 29);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(51, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Server IP";
-            // 
-            // tbServerIP
-            // 
-            this.tbServerIP.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tbServerIP.Location = new System.Drawing.Point(83, 32);
-            this.tbServerIP.Name = "tbServerIP";
-            this.tbServerIP.Size = new System.Drawing.Size(378, 20);
-            this.tbServerIP.TabIndex = 1;
-            // 
             // tableLayoutPanel1
             // 
             this.tableLayoutPanel1.ColumnCount = 2;
@@ -196,6 +91,65 @@
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 43F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(464, 111);
             this.tableLayoutPanel1.TabIndex = 7;
+            // 
+            // btnStart
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this.btnStart, 2);
+            this.btnStart.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnStart.Location = new System.Drawing.Point(3, 71);
+            this.btnStart.Name = "btnStart";
+            this.btnStart.Size = new System.Drawing.Size(458, 37);
+            this.btnStart.TabIndex = 2;
+            this.btnStart.Text = "Server Starten";
+            this.btnStart.UseVisualStyleBackColor = true;
+            this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
+            // 
+            // labelName
+            // 
+            this.labelName.AutoSize = true;
+            this.labelName.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.labelName.Location = new System.Drawing.Point(3, 0);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(74, 34);
+            this.labelName.TabIndex = 5;
+            this.labelName.Text = "Spielername";
+            // 
+            // tblength
+            // 
+            this.tblength.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tblength.Location = new System.Drawing.Point(83, 37);
+            this.tblength.Name = "tblength";
+            this.tblength.Size = new System.Drawing.Size(378, 20);
+            this.tblength.TabIndex = 4;
+            // 
+            // tbNameServer
+            // 
+            this.tbNameServer.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNameServer.Location = new System.Drawing.Point(83, 3);
+            this.tbNameServer.Name = "tbNameServer";
+            this.tbNameServer.Size = new System.Drawing.Size(378, 20);
+            this.tbNameServer.TabIndex = 6;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.label5.Location = new System.Drawing.Point(3, 34);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(74, 34);
+            this.label5.TabIndex = 3;
+            this.label5.Text = "Max Lenght";
+            // 
+            // tClient
+            // 
+            this.tClient.Controls.Add(this.tableLayoutPanel2);
+            this.tClient.Location = new System.Drawing.Point(4, 22);
+            this.tClient.Name = "tClient";
+            this.tClient.Padding = new System.Windows.Forms.Padding(3);
+            this.tClient.Size = new System.Drawing.Size(470, 117);
+            this.tClient.TabIndex = 1;
+            this.tClient.Text = "Client";
+            this.tClient.UseVisualStyleBackColor = true;
             // 
             // tableLayoutPanel2
             // 
@@ -217,6 +171,52 @@
             this.tableLayoutPanel2.Size = new System.Drawing.Size(464, 111);
             this.tableLayoutPanel2.TabIndex = 9;
             // 
+            // btnSearch
+            // 
+            this.tableLayoutPanel2.SetColumnSpan(this.btnSearch, 2);
+            this.btnSearch.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.btnSearch.Location = new System.Drawing.Point(3, 61);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(458, 47);
+            this.btnSearch.TabIndex = 4;
+            this.btnSearch.Text = "Server Suchen";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnClientStart_Click);
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(3, 0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Spielername";
+            // 
+            // tbNameClient
+            // 
+            this.tbNameClient.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbNameClient.Location = new System.Drawing.Point(83, 3);
+            this.tbNameClient.Name = "tbNameClient";
+            this.tbNameClient.Size = new System.Drawing.Size(378, 20);
+            this.tbNameClient.TabIndex = 8;
+            // 
+            // tbServerIP
+            // 
+            this.tbServerIP.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tbServerIP.Location = new System.Drawing.Point(83, 32);
+            this.tbServerIP.Name = "tbServerIP";
+            this.tbServerIP.Size = new System.Drawing.Size(378, 20);
+            this.tbServerIP.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(3, 29);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(51, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Server IP";
+            // 
             // frmMenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -227,9 +227,9 @@
             this.Text = "frmMenu";
             this.tabControl.ResumeLayout(false);
             this.tServer.ResumeLayout(false);
-            this.tClient.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            this.tClient.ResumeLayout(false);
             this.tableLayoutPanel2.ResumeLayout(false);
             this.tableLayoutPanel2.PerformLayout();
             this.ResumeLayout(false);
