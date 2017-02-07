@@ -95,7 +95,7 @@ namespace winWriteYourKrasseStory
                     messageReceived(text);
                 }
             }
-
+            socket.BeginReceive(this.buffer, 0, this.buffer.Length, SocketFlags.None, new AsyncCallback(OnReceiveCallback), socket);
         }
 
         public void SendData(ConnectionToClient client, string text)
