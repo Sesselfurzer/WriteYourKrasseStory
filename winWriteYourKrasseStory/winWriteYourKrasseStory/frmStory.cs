@@ -13,21 +13,19 @@ namespace winWriteYourKrasseStory
     public partial class frmStory : Form
     {
         delegate void neuerSpielerDelegate(string spieler);
+        delegate void SpieleraddDelegate(string s);
         List<Spieler> lstSpieler;
         List<string> lstItems;
         Spieler thisSpieler;
         TCPServer Server;
         TCPClient client;
         Thread ServerThread;
-        ListView lv;
         public frmStory(string Hostname, string Name)
         {
             InitializeComponent();
             btnEnd.Text = "Start";
             lstSpieler = new List<Spieler>();
             lstItems = new List<string>();
-            lvSpieler.Items.Add(Name);
-            lstSpieler.Add(new Spieler(Name));
             tbZeile.Enabled = false;
             client = new TCPClient(Hostname);
             client.messageReceived += messageReceived;
@@ -38,22 +36,23 @@ namespace winWriteYourKrasseStory
         public frmStory(string Name, int maxlength)
         {
             //basis Konstruktor
-
             InitializeComponent();
             btnEnd.Text = "Start";
             lstSpieler = new List<Spieler>();
             lstItems = new List<string>();
-            lvSpieler.Items.Add(Name);
-            lstSpieler.Add(new Spieler(Name));
             tbZeile.Enabled = false;
+
             //basis Konstruktor Ende
             Server = new TCPServer();
             Server.newClientConnected += Server_newClientConnected;
             Server.messageReceived += ServermessageReceived;
 #warning nutzloser thread
-            ServerThread = new Thread(() => thread(lvSpieler));
+            ServerThread = new Thread(Server.StartServer);
             ServerThread.Start();
-            //thread(lvSpieler);
+            client = new TCPClient("::1");
+            client.messageReceived += messageReceived;
+            client.Connect();
+            client.send("N:" + Name);
             tbZeile.MaxLength = maxlength;
             thisSpieler = new Spieler(Name);
         }
@@ -62,37 +61,17 @@ namespace winWriteYourKrasseStory
             switch (message.Substring(0, 2))
             {
                 case "P:":
-                    NeuerSpieler(message.Substring(2));
                     for (int i = 0; i < lstSpieler.Count; i++)
                     {
-                        if (lstSpieler[i].Name == message.Substring(2))
+                        if (lstSpieler[i].Name == message.Substring(2) && lstSpieler.Count - 1 == i)
                         {
-                            if (lstSpieler.Count - 1 == i)
-                            {
-                                if (lstSpieler[0].client != null)
-                                {
-                                    Server.SendData(lstSpieler[0].client, "Dr");
-                                }
-                                else
-                                {
-                                    this.tbZeile.Enabled = true;
-                                }
-                            }
-                            else
-                            {
-                                if (lstSpieler[i + 1].client != null)
-                                {
-                                    Server.SendData(lstSpieler[i + 1].client, "Dr");
-                                }
-                                else
-                                {
-                                    this.tbZeile.Enabled = true;
-                                }
-                            }
+                            Server.SendData(lstSpieler[0].client, "Dr");
+                        }
+                        else if (lstSpieler[i].Name == message.Substring(2))
+                        {
+                            Server.SendData(lstSpieler[i + 1].client, "Dr");
                         }
                     }
-                    break;
-                case "V:":
                     break;
                 case "Z:":
                     foreach (Spieler s in lstSpieler)
@@ -101,32 +80,18 @@ namespace winWriteYourKrasseStory
                     }
                     break;
                 case "N:":
-                    NeuerSpieler(message.Substring(2));
                     lstSpieler[lstSpieler.Count - 1].Name = message.Substring(2, message.Length - 2);
-
+                    string players = "";
+                    foreach (Spieler p in lstSpieler)
+                    {
+                        players += "P:" + p.Name;
+                    }
                     foreach (Spieler s in lstSpieler)
                     {
-                        if (lstSpieler[lstSpieler.Count - 1].client != null)
-                        {
-                            Server.SendData(lstSpieler[lstSpieler.Count - 1].client, "P: " + s.Name);
-
-                        }
-                    }
-                    for(int i = 0; i < lstSpieler.Count - 2; i++)
-                    {
-                        if (lstSpieler[i].client != null)
-                        {
-                            Server.SendData(lstSpieler[i].client, lstSpieler[lstSpieler.Count - 1].Name);
-                        }
+                        Server.SendData(s.client, players);
                     }
                     break;
-
             }
-        }
-        public void thread(ListView lvSpieler1)
-        {
-            lv = lvSpieler1;
-            Server.StartServer();
         }
         private void Server_newClientConnected(ConnectionToClient client)
         {
@@ -137,23 +102,22 @@ namespace winWriteYourKrasseStory
             switch (str.Substring(0, 2))
             {
                 case "P:":
-                    NeuerSpieler(str.Substring(2, str.Length - 2));
+
+                    lvSpieler.Items.Clear();
+
+                    string[] strsplit2 = str.Split(':');
+                    string[] strsplit = strsplit2.Skip(1).ToArray();
+                    foreach (string s in strsplit)
+                    {
+                        NeuerSpieler(s.Substring(0, s.Length - 1));
+                    }
                     break;
                 case "Z:":
                     NeueZeile(str.Substring(2, str.Length - 2));
                     break;
-                //case "V:":
-                //    changeVoting();
-                //    break;
-                case "Y:":
-                    thisSpieler = new Spieler(str.Substring(2, str.Length - 2));
-                    break;
                 case "EN":
                     lbZeilen.Items.Clear();
-                    foreach (string s in lstItems)
-                    {
-                        lbZeilen.Items.Add(s);
-                    }
+                    foreach (string s in lstItems) { lbZeilen.Items.Add(s); }
                     break;
                 case "Dr":
                     tbZeile.Enabled = true;
@@ -173,6 +137,7 @@ namespace winWriteYourKrasseStory
             {
                 NeueZeile(tbZeile.Text);
                 tbZeile.Text = "";
+                tbZeile.Enabled = false;
             }
 
         }
@@ -186,16 +151,19 @@ namespace winWriteYourKrasseStory
             else
             {
                 lbZeilen.Items.Clear();
+                if (this.Server != null)
+                {
+                    foreach (Spieler s in lstSpieler)
+                    {
+                        if (s.client != null)
+                        {
+                            Server.SendData(s.client, "EN");
+                        }
+                    }
+                }
                 foreach (string s in lstItems)
                 {
                     lbZeilen.Items.Add(s);
-                }
-                foreach (Spieler s in lstSpieler)
-                {
-                    if (s.client != null)
-                    {
-                        Server.SendData(s.client, "EN");
-                    }
                 }
             }
         }
@@ -205,43 +173,14 @@ namespace winWriteYourKrasseStory
         }
         public void NeuerSpieler(string Player)
         {
-            if (InvokeRequired)
-            {
-                neuerSpielerDelegate temp = NeuerSpieler;
-                object[] tempArgs = { Player };
-                Invoke(temp, tempArgs);
-            }
-            else
-            {
-                lvSpieler.Items.Add(Player);
-            }
-            lstSpieler.Add(new Spieler(Player));
+            lvSpieler.Items.Add(Player);
         }
         public void NeueZeile(string Zeile)
         {
             lstItems.Add(Zeile);
             lbZeilen.Items.Add(Zeile);
-            if (client != null)
-            {
-                client.send("P:" + thisSpieler.Name);
-            }
-            else
-            {
-                ServermessageReceived("P:" + lstSpieler[1].Name);
-            }
+            client.send("P:" + thisSpieler.Name);
+            client.send("Z:" + Zeile);
         }
-        //public void changeVoting()
-        //{
-        //    Voting++;
-        //    btnEnd.Text = "Beenden " + Voting;
-        //    if (Voting >= lstSpieler.Count && Voting != 0)
-        //    {
-        //        lbZeilen.Items.Clear();
-        //        foreach (String s in lstItems)
-        //        {
-        //            lbZeilen.Items.Add(s);
-        //        }
-        //    }
-        //}
     }
 }
