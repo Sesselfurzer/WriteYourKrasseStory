@@ -39,7 +39,7 @@ namespace winWriteYourKrasseStory
 
         public void send(string message)
         {
-            byte[] data = Encoding.ASCII.GetBytes(message);
+            byte[] data = Encoding.UTF8.GetBytes(message);
             ClientSocket.BeginSend(data, 0, data.Length, SocketFlags.None, new AsyncCallback(OnSendCallback), ClientSocket);
         }
         public async void Connect()
@@ -71,7 +71,7 @@ namespace winWriteYourKrasseStory
             int receivedByteCount = socket.EndReceive(ar);
             byte[] data = new byte[receivedByteCount];
             Array.Copy(this.buffer, data, receivedByteCount);
-            string text = Encoding.ASCII.GetString(data);
+            string text = Encoding.UTF8.GetString(data);
             if (messageReceived != null)
             {
                 messageReceived(text);

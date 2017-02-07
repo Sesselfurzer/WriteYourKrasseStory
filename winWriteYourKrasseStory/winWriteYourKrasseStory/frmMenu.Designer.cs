@@ -60,6 +60,7 @@
             this.tabControl.SelectedIndex = 0;
             this.tabControl.Size = new System.Drawing.Size(478, 143);
             this.tabControl.TabIndex = 0;
+            this.tabControl.TabStop = false;
             // 
             // tServer
             // 
@@ -108,7 +109,7 @@
             this.tblength.Location = new System.Drawing.Point(83, 37);
             this.tblength.Name = "tblength";
             this.tblength.Size = new System.Drawing.Size(378, 20);
-            this.tblength.TabIndex = 4;
+            this.tblength.TabIndex = 2;
             // 
             // tbNameServer
             // 
@@ -116,7 +117,7 @@
             this.tbNameServer.Location = new System.Drawing.Point(83, 3);
             this.tbNameServer.Name = "tbNameServer";
             this.tbNameServer.Size = new System.Drawing.Size(378, 20);
-            this.tbNameServer.TabIndex = 6;
+            this.tbNameServer.TabIndex = 1;
             // 
             // label5
             // 
@@ -135,7 +136,7 @@
             this.btnStart.Location = new System.Drawing.Point(3, 71);
             this.btnStart.Name = "btnStart";
             this.btnStart.Size = new System.Drawing.Size(458, 37);
-            this.btnStart.TabIndex = 2;
+            this.btnStart.TabIndex = 3;
             this.btnStart.Text = "Server Starten";
             this.btnStart.UseVisualStyleBackColor = true;
             this.btnStart.Click += new System.EventHandler(this.btnStarten_Click);
@@ -187,7 +188,7 @@
             this.btnSearch.Location = new System.Drawing.Point(3, 61);
             this.btnSearch.Name = "btnSearch";
             this.btnSearch.Size = new System.Drawing.Size(458, 47);
-            this.btnSearch.TabIndex = 4;
+            this.btnSearch.TabIndex = 3;
             this.btnSearch.Text = "Server Suchen";
             this.btnSearch.UseVisualStyleBackColor = true;
             this.btnSearch.Click += new System.EventHandler(this.btnClientStart_Click);
@@ -198,7 +199,7 @@
             this.tbNameClient.Location = new System.Drawing.Point(83, 3);
             this.tbNameClient.Name = "tbNameClient";
             this.tbNameClient.Size = new System.Drawing.Size(378, 20);
-            this.tbNameClient.TabIndex = 8;
+            this.tbNameClient.TabIndex = 1;
             // 
             // tbServerIP
             // 
@@ -206,7 +207,7 @@
             this.tbServerIP.Location = new System.Drawing.Point(83, 32);
             this.tbServerIP.Name = "tbServerIP";
             this.tbServerIP.Size = new System.Drawing.Size(378, 20);
-            this.tbServerIP.TabIndex = 1;
+            this.tbServerIP.TabIndex = 2;
             // 
             // label1
             // 

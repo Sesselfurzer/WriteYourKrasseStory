@@ -103,8 +103,8 @@ namespace winWriteYourKrasseStory
             switch (str.Substring(0, 2))
             {
                 case "P:":
-                    string spielerName = str.Substring(2);
-                    NeuerSpieler(spielerName);
+                    string spielerListe = str.Substring(2);
+                    spielerListeAktualisieren(spielerListe);
                     break;
                 case "Z:":
                     zeileZuListeHinzufuegen(str.Substring(2, str.Length - 2));
@@ -164,17 +164,26 @@ namespace winWriteYourKrasseStory
         {
             Application.Exit();
         }
-        public void NeuerSpieler(string Player)
+        public void spielerListeAktualisieren(string liste)
         {
             if (InvokeRequired)
             {
-                voidStringDelegate temp = NeuerSpieler;
-                Object[] args = { Player };
+                voidStringDelegate temp = spielerListeAktualisieren;
+                Object[] args = { liste };
                 Invoke(temp,args);
             }
             else
             {
-                lvSpieler.Items.Add(Player);
+                lvSpieler.Items.Clear();
+                string[] spielerNamen = liste.Split(':');
+                for (int i = 0; i < spielerNamen.Length-1; i++) //Letztzeichen löchen(ist ein P)
+                {
+                    spielerNamen[i] = spielerNamen[i].Substring(0, spielerNamen[i].Length - 1);
+                }
+                foreach (string spieler in spielerNamen)
+                {
+                    lvSpieler.Items.Add(spieler);
+                }
             }
         }
         public void zeileSenden(string Zeile)
