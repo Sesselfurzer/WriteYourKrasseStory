@@ -32,10 +32,10 @@ namespace winWriteYourKrasseStory
             client = new TCPClient(Hostname);
             client.messageReceived += messageReceived;
             client.Connect();
-            client.send("P:" + Name);
+            client.send("N:" + Name);
             btnEnd.Enabled = false;
         }
-        public frmStory( string Name, int maxlength)
+        public frmStory(string Name, int maxlength)
         {
             //basis Konstruktor
 
@@ -52,21 +52,21 @@ namespace winWriteYourKrasseStory
             Server.messageReceived += ServermessageReceived;
 #warning nutzloser thread
             ServerThread = new Thread(() => thread(lvSpieler));
-             ServerThread.Start();
+            ServerThread.Start();
             //thread(lvSpieler);
             tbZeile.MaxLength = maxlength;
             thisSpieler = new Spieler(Name);
         }
         private void ServermessageReceived(string message)
         {
-            switch (message.Substring(0,2))
+            switch (message.Substring(0, 2))
             {
                 case "P:":
-                    for(int i = 0; i < lstSpieler.Count; i++)
+                    for (int i = 0; i < lstSpieler.Count; i++)
                     {
                         if (lstSpieler[i].Name == message.Substring(2))
                         {
-                            if (lstSpieler.Count-1  == i)
+                            if (lstSpieler.Count - 1 == i)
                             {
                                 if (lstSpieler[0].client != null)
                                 {
@@ -94,10 +94,29 @@ namespace winWriteYourKrasseStory
                 case "V:":
                     break;
                 case "Z:":
+                    foreach (Spieler s in lstSpieler)
+                    {
+                        Server.SendData(s.client, message);
+                    }
+                    break;
+                case "N":
+                    lstSpieler[lstSpieler.Count - 1].Name = message.Substring(2, message.Length - 2);
+                    if (lstSpieler[lstSpieler.Count - 1].client != null)
+                    {
                         foreach (Spieler s in lstSpieler)
                         {
-                            Server.SendData(s.client, message);
+
+                            Server.SendData(lstSpieler[lstSpieler.Count - 1].client, "P: " + s.Name);
+
                         }
+                    }
+                    for(int i = 0; i < lstSpieler.Count - 2; i++)
+                    {
+                        if (lstSpieler[i].client != null)
+                        {
+                            Server.SendData(lstSpieler[i].client, lstSpieler[lstSpieler.Count - 1].Name);
+                        }
+                    }
                     break;
 
             }
@@ -109,13 +128,7 @@ namespace winWriteYourKrasseStory
         }
         private void Server_newClientConnected(ConnectionToClient client)
         {
-            lstSpieler.Add(new Spieler("Player " + lstSpieler.Count + 1, client));
-            Server.SendData(client, "Y: " + "Player " + lstSpieler.Count);
-            foreach (Spieler s in lstSpieler)
-            {
-                Server.SendData(client, "P: " + s.Name);
-            }
-
+            lstSpieler.Add(new Spieler("", client));
         }
         private void messageReceived(string str)
         {
@@ -125,7 +138,7 @@ namespace winWriteYourKrasseStory
                     NeuerSpieler(str.Substring(2, str.Length - 2));
                     break;
                 case "Z:":
-                        NeueZeile(str.Substring(2, str.Length - 2));
+                    NeueZeile(str.Substring(2, str.Length - 2));
                     break;
                 //case "V:":
                 //    changeVoting();
@@ -140,7 +153,7 @@ namespace winWriteYourKrasseStory
                         lbZeilen.Items.Add(s);
                     }
                     break;
-                case"Dr":
+                case "Dr":
                     tbZeile.Enabled = true;
                     break;
             }
@@ -168,7 +181,8 @@ namespace winWriteYourKrasseStory
                 this.tbZeile.Enabled = true;
                 btnEnd.Text = "Beenden";
             }
-            else { 
+            else
+            {
                 lbZeilen.Items.Clear();
                 foreach (string s in lstItems)
                 {
