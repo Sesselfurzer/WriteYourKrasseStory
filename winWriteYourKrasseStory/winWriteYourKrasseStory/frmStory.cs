@@ -32,6 +32,7 @@ namespace winWriteYourKrasseStory
             client.messageReceived += messageReceived;
             client.Connect();
             client.send("N:" + Name);
+            thisSpieler = new Spieler(Name);
             btnEnd.Enabled = false;
         }
         public frmStory(string Name, int maxlength)
