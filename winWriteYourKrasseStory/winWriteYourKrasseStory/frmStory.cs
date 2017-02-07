@@ -104,8 +104,8 @@ namespace winWriteYourKrasseStory
                     NeuerSpieler(message.Substring(2));
                     lstSpieler[lstSpieler.Count - 1].Name = message.Substring(2, message.Length - 2);
 
-                        foreach (Spieler s in lstSpieler)
-                        {
+                    foreach (Spieler s in lstSpieler)
+                    {
                         if (lstSpieler[lstSpieler.Count - 1].client != null)
                         {
                             Server.SendData(lstSpieler[lstSpieler.Count - 1].client, "P: " + s.Name);
