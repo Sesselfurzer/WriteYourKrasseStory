@@ -62,6 +62,7 @@ namespace winWriteYourKrasseStory
             switch (message.Substring(0, 2))
             {
                 case "P:":
+                    NeuerSpieler(message.Substring(2));
                     for (int i = 0; i < lstSpieler.Count; i++)
                     {
                         if (lstSpieler[i].Name == message.Substring(2))
@@ -99,13 +100,14 @@ namespace winWriteYourKrasseStory
                         Server.SendData(s.client, message);
                     }
                     break;
-                case "N":
+                case "N:":
+                    NeuerSpieler(message.Substring(2));
                     lstSpieler[lstSpieler.Count - 1].Name = message.Substring(2, message.Length - 2);
-                    if (lstSpieler[lstSpieler.Count - 1].client != null)
-                    {
+
                         foreach (Spieler s in lstSpieler)
                         {
-
+                        if (lstSpieler[lstSpieler.Count - 1].client != null)
+                        {
                             Server.SendData(lstSpieler[lstSpieler.Count - 1].client, "P: " + s.Name);
 
                         }
