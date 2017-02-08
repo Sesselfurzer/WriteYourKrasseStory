@@ -129,6 +129,7 @@ namespace winWriteYourKrasseStory
         {
             if (e.KeyCode == Keys.Enter)
             {
+                lbZeilen.Items.Clear();
                 zeileSenden(tbZeile.Text);
                 tbZeile.Text = "";
                 tbZeile.Enabled = false;
@@ -189,8 +190,8 @@ namespace winWriteYourKrasseStory
         }
         public void zeileSenden(string Zeile)
         {
-            client.send("P:" + thisSpieler.Name);
             client.send("Z:" + Zeile);
+            client.send("P:" + thisSpieler.Name);
         }
         public void zeileZuListeHinzufuegen(string Zeile)
         {
@@ -203,7 +204,7 @@ namespace winWriteYourKrasseStory
             else
             {
                 lstItems.Add(Zeile);
-                lbZeilen.Items.Add(Zeile);
+                //lbZeilen.Items.Add(Zeile);
             }
         }
         public void rundeVorbereiten()
@@ -216,6 +217,7 @@ namespace winWriteYourKrasseStory
             else
             {
                 tbZeile.Enabled = true;
+                lbZeilen.Items.Add(lstItems.Last());
             }
         }
         private void aufloesen()
