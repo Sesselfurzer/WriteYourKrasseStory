@@ -99,7 +99,7 @@
             this.btnEnd.Name = "btnEnd";
             this.btnEnd.Size = new System.Drawing.Size(169, 30);
             this.btnEnd.TabIndex = 5;
-            this.btnEnd.Text = "Beenden";
+            this.btnEnd.Text = "Auflösen";
             this.btnEnd.UseVisualStyleBackColor = true;
             this.btnEnd.Click += new System.EventHandler(this.btnEnd_Click);
             // 

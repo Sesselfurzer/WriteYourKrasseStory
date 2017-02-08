@@ -10,7 +10,9 @@ namespace winWriteYourKrasseStory
     public class TCPClient
     {
         public delegate void messageReceivedHandler(string message);
+        public delegate void connectionLostHandler();
         public event messageReceivedHandler messageReceived;
+        public event connectionLostHandler connectionLost;
         public const int maximumAttempts = 5;
         public const int connectTimeOut = 1000;
         private Socket ClientSocket;
@@ -68,7 +70,20 @@ namespace winWriteYourKrasseStory
         private void OnReceiveCallback(IAsyncResult ar)
         {
             Socket socket = ar.AsyncState as Socket;
-            int receivedByteCount = socket.EndReceive(ar);
+            int receivedByteCount;
+            try
+            {
+                receivedByteCount = socket.EndReceive(ar);
+            }
+            catch (SocketException)
+            {
+
+                if (connectionLost != null)
+                {
+                    connectionLost();
+                }
+                return;
+            } 
             byte[] data = new byte[receivedByteCount];
             Array.Copy(this.buffer, data, receivedByteCount);
             string text = Encoding.UTF8.GetString(data);

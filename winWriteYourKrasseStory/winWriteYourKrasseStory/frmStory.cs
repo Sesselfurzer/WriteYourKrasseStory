@@ -34,6 +34,7 @@ namespace winWriteYourKrasseStory
             client.send("N:" + Name);
             thisSpieler = new Spieler(Name);
             btnEnd.Enabled = false;
+            client.connectionLost += programmSchliessen;
         }
         public frmStory(string Name, int maxlength)
         {
@@ -57,6 +58,7 @@ namespace winWriteYourKrasseStory
             client.send("N:" + Name);
             tbZeile.MaxLength = maxlength;
             thisSpieler = new Spieler(Name);
+            client.connectionLost += programmSchliessen;
         }
         private void ServermessageReceived(string message)
         {
@@ -141,7 +143,7 @@ namespace winWriteYourKrasseStory
             if (btnEnd.Text == "Start")
             {
                 this.tbZeile.Enabled = true;
-                btnEnd.Text = "Beenden";
+                btnEnd.Text = "Auflösen";
             }
             else
             {
@@ -232,6 +234,11 @@ namespace winWriteYourKrasseStory
                 lbZeilen.Items.Clear();
                 foreach (string s in lstItems) { lbZeilen.Items.Add(s); }
             }
+        }
+
+        private void programmSchliessen()
+        {
+            System.Diagnostics.Process.GetCurrentProcess().Kill();
         }
     }
 }
