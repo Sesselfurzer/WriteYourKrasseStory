@@ -29,7 +29,6 @@ namespace winWriteYourKrasseStory
             catch (System.ArgumentException)
             {
                 System.Diagnostics.Process.GetCurrentProcess().Kill();
-#warning das ist noch kacke der fehler muss behandelt werden
             }
 
             IP = host.AddressList[0];

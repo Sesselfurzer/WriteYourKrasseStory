@@ -55,7 +55,7 @@
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 9.669211F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 35F));
-            this.tableLayoutPanel.Size = new System.Drawing.Size(653, 453);
+            this.tableLayoutPanel.Size = new System.Drawing.Size(949, 567);
             this.tableLayoutPanel.TabIndex = 0;
             // 
             // lbZeilen
@@ -67,16 +67,16 @@
             this.lbZeilen.Location = new System.Drawing.Point(3, 3);
             this.lbZeilen.Name = "lbZeilen";
             this.tableLayoutPanel.SetRowSpan(this.lbZeilen, 3);
-            this.lbZeilen.Size = new System.Drawing.Size(472, 411);
+            this.lbZeilen.Size = new System.Drawing.Size(688, 525);
             this.lbZeilen.TabIndex = 0;
             // 
             // lvSpieler
             // 
             this.lvSpieler.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lvSpieler.Location = new System.Drawing.Point(481, 3);
+            this.lvSpieler.Location = new System.Drawing.Point(697, 3);
             this.lvSpieler.Name = "lvSpieler";
             this.tableLayoutPanel.SetRowSpan(this.lvSpieler, 3);
-            this.lvSpieler.Size = new System.Drawing.Size(169, 411);
+            this.lvSpieler.Size = new System.Drawing.Size(249, 525);
             this.lvSpieler.TabIndex = 2;
             this.lvSpieler.UseCompatibleStateImageBehavior = false;
             // 
@@ -84,10 +84,10 @@
             // 
             this.tbZeile.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tbZeile.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbZeile.Location = new System.Drawing.Point(3, 420);
-            this.tbZeile.MaxLength = 88;
+            this.tbZeile.Location = new System.Drawing.Point(3, 534);
+            this.tbZeile.MaxLength = 100;
             this.tbZeile.Name = "tbZeile";
-            this.tbZeile.Size = new System.Drawing.Size(472, 20);
+            this.tbZeile.Size = new System.Drawing.Size(688, 20);
             this.tbZeile.TabIndex = 1;
             this.tbZeile.WordWrap = false;
             this.tbZeile.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tbZeile_KeyDown);
@@ -95,9 +95,9 @@
             // btnEnd
             // 
             this.btnEnd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.btnEnd.Location = new System.Drawing.Point(481, 420);
+            this.btnEnd.Location = new System.Drawing.Point(697, 534);
             this.btnEnd.Name = "btnEnd";
-            this.btnEnd.Size = new System.Drawing.Size(169, 30);
+            this.btnEnd.Size = new System.Drawing.Size(249, 30);
             this.btnEnd.TabIndex = 5;
             this.btnEnd.Text = "Auflösen";
             this.btnEnd.UseVisualStyleBackColor = true;
@@ -107,7 +107,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(653, 453);
+            this.ClientSize = new System.Drawing.Size(949, 567);
             this.Controls.Add(this.tableLayoutPanel);
             this.Name = "frmStory";
             this.Text = "Write your Krasse Story";

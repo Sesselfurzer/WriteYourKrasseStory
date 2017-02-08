@@ -110,6 +110,8 @@
             this.tblength.Name = "tblength";
             this.tblength.Size = new System.Drawing.Size(378, 20);
             this.tblength.TabIndex = 2;
+            this.tblength.Text = "100";
+            this.tblength.Visible = false;
             // 
             // tbNameServer
             // 
@@ -128,6 +130,7 @@
             this.label5.Size = new System.Drawing.Size(74, 34);
             this.label5.TabIndex = 3;
             this.label5.Text = "Max Lenght";
+            this.label5.Visible = false;
             // 
             // btnStart
             // 
